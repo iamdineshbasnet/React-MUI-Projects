@@ -2,17 +2,20 @@ import React, { useState } from "react";
 import { Grid, TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const CreateUser = () => {
+const CreateUser = ({editData: {edit, value}, editData}) => {
+    // const {firstname: firstNameValue, lastname: lastNameValue} = value
+    // console.log(firstNameValue)
     const navigate = useNavigate()
     const [userData, setUserData]=useState({
-        firstname: '',
-        lastname: ''
+        firstname: edit? value?.firstname: '',
+        lastname: edit? value?.lastname: ''
     })
     const handleSubmit = () => {
-        postData();
+        edit ? updateData() : postData();
     };
     const {firstname, lastname} = userData
     const handlefirstName = ({target: {value}}) =>{
+        
         setUserData({...userData, firstname: value})
     }
     const handlelastName = ({target: {value}}) =>{
@@ -24,6 +27,13 @@ const CreateUser = () => {
             lastname,
         }).then((data)=> navigate("/user-list"));
     };
+    const updateData = () => {
+        axios.put(`https://63b06aa0f9a53fa20268c6ed.mockapi.io/api/v1/users/${value?.id}`, {
+            firstname,
+            lastname,
+        }).then((data)=> navigate("/user-list"));
+    };
+    
     return (
         <>
             <Grid container justifyContent="center">
@@ -55,7 +65,7 @@ const CreateUser = () => {
                         variant="contained"
                         sx={{ width: "100%" }}
                         onClick={handleSubmit}>
-                        Submit
+                        {edit? "Update":"Add"}
                     </Button>
                 </Grid>
             </Grid>

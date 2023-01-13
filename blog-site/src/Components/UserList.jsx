@@ -10,24 +10,25 @@ import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
 import { Grid, Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import axios from "axios";
-const UserList = () => {
+import { useNavigate } from "react-router-dom";
+const UserList = ({setEditData}) => {
     const [user, setUser] = useState([]);
+    const navigate = useNavigate()
     const [rowsPerPage, setRowsPerPage] = useState(3);
     const [page, setPage] = useState(1);
     const [isLoadingUser, setIsLoadingUser] = useState(false);
     const getUserData = () => {
         setIsLoadingUser(true);
         const url = "https://63b06aa0f9a53fa20268c6ed.mockapi.io/api/v1/users";
-        axios(url)
-            .then(({data}) => {
-                setIsLoadingUser(false);
-                setUser(data);
-            });
+        axios(url).then(({ data }) => {
+            setIsLoadingUser(false);
+            setUser(data);
+        });
     };
 
     useEffect(() => {
@@ -36,14 +37,19 @@ const UserList = () => {
 
     const handleUserPage = (event, newPage) => {
         setPage(newPage);
-        console.log(page);
     };
 
-  const handleRowsOnPage = (event) => {
-    setRowsPerPage(event.target.value);
-  };
+    const handleRowsOnPage = (event) => {
+        setRowsPerPage(event.target.value);
+    };
 
-  
+    const handleEdit = (name) => {
+
+        setEditData({edit: true, value: name})
+        navigate("/create-user")
+    };
+
+    const handleDelete = () => {};
     return (
         <>
             {isLoadingUser ? (
@@ -55,10 +61,18 @@ const UserList = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell sx={{fontWeight: 'bold'}}>S.N</TableCell>
-                                <TableCell sx={{fontWeight: 'bold'}}>First Name</TableCell>
-                                <TableCell sx={{fontWeight: 'bold'}}>Last Name</TableCell>
-                                <TableCell sx={{fontWeight: 'bold'}}>Actions</TableCell>
+                                <TableCell sx={{ fontWeight: "bold" }}>
+                                    S.N
+                                </TableCell>
+                                <TableCell sx={{ fontWeight: "bold" }}>
+                                    First Name
+                                </TableCell>
+                                <TableCell sx={{ fontWeight: "bold" }}>
+                                    Last Name
+                                </TableCell>
+                                <TableCell sx={{ fontWeight: "bold" }}>
+                                    Actions
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -84,8 +98,19 @@ const UserList = () => {
                                         <TableCell>{name.firstname}</TableCell>
                                         <TableCell>{name.lastname}</TableCell>
                                         <TableCell>
-                                            <Button variant="contained" sx={{marginRight: '5px'}} size='small' onClick={handleEdit}>Edit</Button>
-                                            <Button variant="contained" size="small" onClick={handleDelete}>Delete</Button>
+                                            <Button
+                                                variant="contained"
+                                                sx={{ marginRight: "5px" }}
+                                                size="small"
+                                                onClick={()=>handleEdit(name)}>
+                                                Edit
+                                            </Button>
+                                            <Button
+                                                variant="contained"
+                                                size="small"
+                                                onClick={handleDelete}>
+                                                Delete
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -94,22 +119,24 @@ const UserList = () => {
                 </TableContainer>
             )}
 
-            <Grid container justifyContent="center" mt={5} alignItems="center" sx={{position: 'fixed', bottom: '190px'}}>
+            <Grid
+                container
+                justifyContent="center"
+                mt={5}
+                alignItems="center"
+                sx={{ position: "fixed", bottom: "190px" }}>
                 <Pagination
                     count={Math.ceil(user.length / rowsPerPage)}
                     variant="outlined"
                     color="primary"
                     onChange={handleUserPage}
                 />
-                <FormControl variant="standard" sx={{ marginLeft: 5, minWidth: 100, }} size='small' >
-                    <InputLabel>
-                        user
-                    </InputLabel>
-                    <Select
-                        
-                        value={rowsPerPage}
-                        onChange={handleRowsOnPage}
-                        >
+                <FormControl
+                    variant="standard"
+                    sx={{ marginLeft: 5, minWidth: 100 }}
+                    size="small">
+                    <InputLabel>user</InputLabel>
+                    <Select value={rowsPerPage} onChange={handleRowsOnPage}>
                         <MenuItem value={1}>1</MenuItem>
                         <MenuItem value={3}>3</MenuItem>
                         <MenuItem value={6}>6</MenuItem>
