@@ -8,13 +8,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Pagination from "@mui/material/Pagination";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import axios from "axios";
 const UserList = () => {
     const [user, setUser] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(3);
@@ -23,9 +23,8 @@ const UserList = () => {
     const getUserData = () => {
         setIsLoadingUser(true);
         const url = "https://63b06aa0f9a53fa20268c6ed.mockapi.io/api/v1/users";
-        fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
+        axios(url)
+            .then(({data}) => {
                 setIsLoadingUser(false);
                 setUser(data);
             });
@@ -43,6 +42,8 @@ const UserList = () => {
   const handleRowsOnPage = (event) => {
     setRowsPerPage(event.target.value);
   };
+
+  
     return (
         <>
             {isLoadingUser ? (
@@ -54,9 +55,10 @@ const UserList = () => {
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>S.N</TableCell>
-                                <TableCell>First Name</TableCell>
-                                <TableCell>Last Name</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>S.N</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>First Name</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Last Name</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -81,6 +83,10 @@ const UserList = () => {
                                         </TableCell>
                                         <TableCell>{name.firstname}</TableCell>
                                         <TableCell>{name.lastname}</TableCell>
+                                        <TableCell>
+                                            <Button variant="contained" sx={{marginRight: '5px'}} size='small' onClick={handleEdit}>Edit</Button>
+                                            <Button variant="contained" size="small" onClick={handleDelete}>Delete</Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                         </TableBody>
