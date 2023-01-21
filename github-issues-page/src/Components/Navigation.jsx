@@ -13,8 +13,9 @@ const Navigation = () => {
         <>
             <AppBar
                 sx={{
+                    position: 'relative',
                     background: "transparent",
-                    marginTop: "5em",
+                    marginTop: "2em",
                     boxShadow: "none",
                     borderBottom: "1px solid #FFF4",
                 }}>

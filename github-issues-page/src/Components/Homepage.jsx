@@ -1,15 +1,34 @@
 import React from "react";
-import Header from "./Header";
-import Navigation from "./Navigation";
-import { Grid, Typography, Box, FormControl, InputLabel } from "@mui/material";
+import { Grid, Typography, Box, FormControl, Tooltip } from "@mui/material";
 import AlbumOutlinedIcon from "@mui/icons-material/AlbumOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
-const Homepage = () => {
+import Chip from "@mui/material/Chip";
+import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import axios from "axios";
+import { useEffect } from "react";
+import TitleHover from "./TitleHover";
+import ProfileHover from "./ProfileHover";
+import { useNavigate } from "react-router-dom";
+const Homepage = ({info, setInfo}) => {
+    const navigate = useNavigate()
+    const getIssues = () => {
+        axios
+            .get("https://api.github.com/repos/facebook/react/issues")
+            .then(({ data }) => setInfo(data));
+    };
+
+    let timeAgo = "";
+
+    useEffect(() => {
+        getIssues();
+    }, []);
+
+    const handleCommentPage = (issueNumber) =>{
+        navigate(`/issue/${issueNumber}`)
+    }
     return (
         <>
-            <Header />
-            <Navigation />
-            <Grid mt={20} sx={{ padding: "0 8em" }}>
+            <Grid mt={10} sx={{ padding: "0 8em" }}>
                 <Box
                     sx={{
                         border: "1px solid #FFF4",
@@ -72,9 +91,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Author
@@ -92,9 +111,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Label
@@ -112,9 +131,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Projects
@@ -132,9 +151,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Milestones
@@ -152,9 +171,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Assignee
@@ -172,9 +191,9 @@ const Homepage = () => {
                                                     border: "none",
                                                     outline: "none",
                                                     color: "#FFF8",
-                                                    fontWeight: '400',
-                                                    marginRight: '1.5em',
-                                                    cursor: 'pointer'
+                                                    fontWeight: "400",
+                                                    marginRight: "1.5em",
+                                                    cursor: "pointer",
                                                 }}>
                                                 <option value="" hidden>
                                                     Sort
@@ -186,355 +205,192 @@ const Homepage = () => {
                             </Box>
                         </Grid>
                     </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    status: unconfirmed
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    status: unconfirmed
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#ffb70099",
-                                        color: "#FFFF00",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Component: Developer Tools
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    status: unconfirmed
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    status: unconfirmed
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#574d3399",
-                                        color: "#baba69",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Component: DOM
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Component: server Rendering
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#62151599",
-                                        color: "#dc6565",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Type: Bug
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#b9a12b33",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Resolution: Needs More Information
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Status: unconfirmed
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    <Box sx={{ borderTop: "1px solid #FFF4", padding: "1em" }}>
-                        <Grid>
-                            <Grid
-                                sx={{ color: "#FFF" }}
-                                container
-                                alignItems="flex-start">
-                                <AlbumOutlinedIcon
-                                    sx={{
-                                        marginRight: "5px",
-                                        color: "#00FF0090",
-                                    }}
-                                />
-                                <Typography>
-                                    Bug: eslint-plugin-react-hooks does not
-                                    support TypeScript "satisfies" operator
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#0003",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Component: server Rendering
-                                </Typography>
-                                <Typography
-                                    sx={{
-                                        marginLeft: "8px",
-                                        background: "#62151599",
-                                        color: "#dc6565",
-                                        borderRadius: "20px",
-                                        padding: "0 10px",
-                                        border: "1px solid #FFF4",
-                                    }}>
-                                    Type: Bug
-                                </Typography>
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    sx={{ marginLeft: "25px", color: "#FFF7" }}>
-                                    #26004 opened 4 hours ago by Egor-Koldasov
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Box>
+                    {info.map((item) => {
+                        const currentDate = new Date().getTime() / 1000;
+                        const createdDate =
+                            new Date(item.created_at).getTime() / 1000;
+                        const diffInSeconds = currentDate - createdDate;
+                        // when time is less than a minute
+                        if (diffInSeconds < 60) {
+                            timeAgo = "Now";
+                        }
+                        // when time is less than an hour
+                        else if (diffInSeconds < 3600) {
+                            timeAgo = `${Math.floor(
+                                diffInSeconds / 60
+                            )} minutes ago`;
+                        }
+                        // when time is less than a day
+                        else if (diffInSeconds < 86400) {
+                            timeAgo = `${Math.floor(
+                                diffInSeconds / 3600
+                            )} hours ago`;
+                        } else if (
+                            diffInSeconds > 86400 &&
+                            diffInSeconds <= 86400 * 2
+                        ) {
+                            // when time is between 1(exclusive) and 2(inclusive) days
+                            timeAgo = `yesterday`;
+                        } else {
+                            // when time is greater than 2 days
+
+                            // when time is less than a week (1week => 60 * 60 * 24 * 7 )
+                            if (diffInSeconds < 604800) {
+                                timeAgo = `${Math.floor(
+                                    diffInSeconds / 86400
+                                )} days ago`;
+                            }
+                            // when week is between 1 and 2
+                            else if (
+                                diffInSeconds > 604800 &&
+                                diffInSeconds <= 604800 * 2
+                            ) {
+                                timeAgo = `last weeks`;
+                            } else {
+                                if (diffInSeconds < 604800 * 4) {
+                                    timeAgo = `${Math.floor(
+                                        Math.floor(diffInSeconds / (86400 * 7))
+                                    )} weeks ago`;
+                                } else if (
+                                    diffInSeconds > 604800 * 4 &&
+                                    diffInSeconds <= 604800 * 4 * 2
+                                ) {
+                                    timeAgo = `a month ago`;
+                                } else {
+                                    timeAgo = `last months`;
+                                }
+                            }
+                        }
+
+                        return (
+                            <Box
+                                sx={{
+                                    borderTop: "1px solid #FFF4",
+                                    padding: "1em",
+                                }}
+                                key={item.id}>
+                                <Grid
+                                    container
+                                    justifyContent="space-between"
+                                    alignItems="flex-start">
+                                    <Box>
+                                        <Grid container>
+                                            <Box>
+                                                <AlbumOutlinedIcon
+                                                    sx={{
+                                                        marginRight: "5px",
+                                                        color: "#00FF0090",
+                                                    }}
+                                                />
+                                            </Box>
+                                            <Box>
+                                                <Grid
+                                                    sx={{
+                                                        color: "#FFF",
+                                                        maxWidth: "900px",
+                                                    }}
+                                                    container
+                                                    alignItems="">
+                                                    <Tooltip
+                                                        placement="top"
+                                                        title={
+                                                            <TitleHover
+                                                                item={item}
+                                                            />
+                                                        }
+                                                        arrow>
+                                                        <Typography
+                                                            onClick={()=>handleCommentPage(item.number)}
+                                                            sx={{
+                                                                cursor: "pointer",
+                                                                "&:hover": {
+                                                                    color: "cyan",
+                                                                },
+                                                            }}>
+                                                            {item.title}
+                                                        </Typography>
+                                                    </Tooltip>
+
+                                                    {item.labels.map((ele) => {
+                                                        return (
+                                                            <Tooltip
+                                                                title={
+                                                                    ele.description
+                                                                }>
+                                                                <Chip
+                                                                    sx={{
+                                                                        background: `#${ele.color}`,
+                                                                        margin: "0 5px",
+                                                                        cursor: "pointer",
+                                                                    }}
+                                                                    label={
+                                                                        ele.name
+                                                                    }
+                                                                    variant="outlined"
+                                                                    size="small"
+                                                                />
+                                                            </Tooltip>
+                                                        );
+                                                    })}
+                                                </Grid>
+                                            </Box>
+                                        </Grid>
+                                        <Grid>
+                                            <Grid
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: 'center',
+                                                    marginTop: "5px",
+                                                    marginLeft: "25px",
+                                                    color: "#FFF7",
+                                                }}>
+                                                    <Typography sx={{marginRight: '4px'}}>{`#${item.number} opened ${timeAgo} by `}</Typography>
+
+                                                    <Tooltip
+                                                        title={
+                                                            <ProfileHover
+                                                                item={item}
+                                                            />
+                                                        }
+                                                        placement="top"
+                                                        arrow>
+                                                        <Typography sx={{cursor: 'pointer', '&:hover':{color: 'cyan'}}}>
+                                                            {item.user.login}
+                                                        </Typography>
+                                                    </Tooltip>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                    <Box>
+                                        <Grid
+                                            onClick={()=>handleCommentPage(item.number)}
+                                            container
+                                            alignItems="center"
+                                            sx={{ cursor: "pointer" }}>
+                                            {item.comments < 1 ? (
+                                                ""
+                                            ) : (
+                                                <>
+                                                    <ChatBubbleOutlineOutlinedIcon
+                                                        fontSize="small"
+                                                        sx={{
+                                                            color: "#FFF",
+                                                            marginRight: "2px",
+                                                        }}
+                                                    />
+
+                                                    <Typography
+                                                        sx={{ color: "#FFF" }}>
+                                                        {item.comments}
+                                                    </Typography>
+                                                </>
+                                            )}
+                                        </Grid>
+                                    </Box>
+                                </Grid>
+                            </Box>
+                        );
+                    })}
                 </Box>
             </Grid>
         </>

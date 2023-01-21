@@ -1,13 +1,21 @@
 import './App.css'
-import Main from './Components/Main'
+import {useState} from 'react'
 import Homepage from './Components/Homepage'
+import Comments from './Components/Comments'
+import Main from './Components/Main'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Header from './Components/Header';
-import Navigation from './Components/Navigation';
 function App() {
+  const [info, setInfo] = useState([]);
   return (
     <div className="App">
-        <Homepage/>
+      <BrowserRouter>
+        <Main>
+          <Routes>
+            <Route path='/' element={<Homepage info={info} setInfo={setInfo}/>}/>
+            <Route path='/issue/:issueNumber'  element={<Comments info={info}/>}/>
+          </Routes>
+        </Main>
+      </BrowserRouter>
     </div>
   );
 }

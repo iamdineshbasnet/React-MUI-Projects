@@ -1,5 +1,5 @@
 import React from "react";
-import { styled, makeStyles } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AddIcon from "@mui/icons-material/Add";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -41,7 +41,7 @@ const Header = () => {
 
     return (
         <>
-            <AppBar sx={{ background: "#2f3640", boxShadow: "none" }}>
+            <AppBar sx={{ background: "#2f3640", boxShadow: "none", position: 'relative' }}>
                 <Toolbar >
                     <Grid container alignItems="center">
                         <Box>
