@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import * as DOMPurify from 'dompurify'
 import { useParams } from "react-router-dom";
 import { Typography, Grid } from "@mui/material";
 const NewComments = () => {
     const [newComments, setNewComments] = useState([]);
     const [extractedData, setExtractedData] = useState([]);
-    const [markDown, setMarkDown] = useState([]);
+    const [markDown, setMarkDown] = useState({
+        markItems: ''
+    });
+    const {markItems} = markDown
+    
     const { issueNumber } = useParams();
+
     useEffect(() => {
         axios
             .get(
@@ -24,38 +30,42 @@ const NewComments = () => {
             });
     }, []);
 
-    const postComments = () => {
-        const bodyArray = extractedData.map((eachBody)=> eachBody.body)
-        console.log(bodyArray)
-        axios
-            .post(`https://api.github.com/markdown`, {
-                text: bodyArray,
-            })
-            .then((res) => console.log(res.data))
-            .catch((error) => console.log(error));
+    const TOKEN = "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";
+    const config = {
+        headers: { Authorization: `Bearer ${TOKEN}` },
     };
-
+    const postComments = () => {
+        extractedData.map((markdownItem) => {
+            axios
+                .post(
+                    `https://api.github.com/markdown`,
+                    {
+                        text: markdownItem.body,
+                    },
+                    config
+                )
+                .then((res) => setMarkDown({...markDown, markItems: res}))
+                .catch((error) => console.log(error, "error"));
+        });
+    };
     useEffect(() => {
-        if (extractedData.length) {
-            postComments();
-        }
+        postComments();
     }, [extractedData]);
-
+    const dataArray = Object.entries(markItems);
+    console.log(markItems, 'markItems')
+    console.log(dataArray, ' dataAray')
     return (
         <>
-            {/* <Grid mt={10}>
-                {extractedData.map((singleComment) => {
-                    return (
-                        <>
-                            <Typography
-                                sx={{ color: "white" }}
-                                key={singleComment.id}>
-                                {singleComment.body}
-                            </Typography>
-                        </>
-                    );
-                })}
-            </Grid> */}
+            <Grid mt={10}>
+                {dataArray.map(([key, value], index) => (
+                    <Typography sx={{ color: "white" }} key={index}>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(value.data),
+                            }}></div>
+                    </Typography>
+                ))}
+            </Grid>
         </>
     );
 };

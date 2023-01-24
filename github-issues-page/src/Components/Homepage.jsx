@@ -311,9 +311,10 @@ const Homepage = ({info, setInfo}) => {
                                                         </Typography>
                                                     </Tooltip>
 
-                                                    {item.labels.map((ele) => {
+                                                    {item.labels.map((ele, index) => {
                                                         return (
                                                             <Tooltip
+                                                                key={ele.id}
                                                                 title={
                                                                     ele.description
                                                                 }>
